@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version        = "0.1.0"
   s.summary        = "UITestHelpers make UITests almost fun to write^^"
   s.description    = <<-DESC
-                      UITestHelpers make UITests almost fun to write^^
+                      A collection of useful helper functions to make writing UI tests at least a little bit less painful.
                    DESC
 
   s.platform       = :ios, "10.0"

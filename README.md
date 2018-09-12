@@ -1,3 +1,6 @@
+WIP
+======
+
 # UITestHelpers
 ![pod](https://img.shields.io/cocoapods/v/UITestHelpers.svg) ![platforms](https://img.shields.io/badge/platforms-iOS-00AFF0.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-00AFF0.svg)](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/LICENSE)
 
@@ -23,16 +26,40 @@ Then run `pod install`.
 
 Of course you can just drag the source files into your project, but using CocoaPods is really the recommended way of using UITestHelpers.
 
-## Usage
+## Usage / Examples
 
-TODO
+```swift
+// handle (dismiss) permission alerts
+self.addAlertsHandler(for: ["Allow", "OK"])
+
+// tap a button
+self.tapButton("buttonAccessibilityIdentifier")
+
+// tap a cell in a collectionView (scroll to the right, if needed)
+self.tapCollectionViewCell("collectionViewCellAccessibilityIdentifier", in: "collectionViewAccessibilityIdentifier", scrollDirection: .right(100))
+
+// tap the "Continue" button on the next alert dialog
+self.tapAlertButton(name: "Continue")
+
+// tap on a static textField
+self.tapElement(app.staticTexts["Proceed with Sandbox Purchase"])
+
+// show keyboard
+self.app.showKeyboard(for: self)
+
+// really type on the keyboard (sometimes this is needed in contrast to `XCUIElement.typeText`)
+self.app.typeOnKeyboard(text: "1337")
+
+// hide keyboard
+self.app.hideKeyboard()
+```
 
 ## Reliability / Improvements / Trouble shooting
 
 ### Ensure a clean app state for each test
 
 As Apple doesn't provide a way to really clean the app state for each test, we'll have to do it manually by providing our own "main function".
-For that we'll use a launch argument like `--Reset` that we'll pass to our `XCUIApplication` in our tests setup (see below).
+For that we'll use a launch argument like `--Reset` that we'll pass to our `XCUIApplication` in our tests setup (see `XCUITestCase` base class).
 
 - Remove the `@UIApplicationMain` annotation from your AppDelegate.
 - Create a `main.swift` file in your project with following content:
