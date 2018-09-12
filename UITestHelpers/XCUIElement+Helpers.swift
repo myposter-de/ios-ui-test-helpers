@@ -4,9 +4,20 @@
 
 import XCTest
 
-// https://stackoverflow.com/questions/32646539/scroll-until-element-is-visible-ios-ui-automation-with-xcode7
 public extension XCUIElement {
-    func scrollToElement(element: XCUIElement, scrollDirection: ScrollDirection = .down) {
+    /**
+     Scrolls to the provided element. Must be used on a `UIScrollView` ;-)
+
+         // Example:
+         let collectionView = self.app.collectionViews.element(boundBy: 0)
+         self.wait(for: collectionView)
+         let cell = collectionView.cells.element(boundBy: 42)
+         collectionView.scrollToElement(element: cell)
+
+     - parameter element: The element to look for.
+     - parameter scrollDirection: Which direction and how far to scroll in each iteration.
+     */
+    func scrollToElement(element: XCUIElement, scrollDirection: ScrollDirection = .down(250.0)) {
         while !(element.exists && element.isHittable) {
             let startCoord = self.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
             let endCoord = startCoord.withOffset(scrollDirection.vector)
@@ -14,6 +25,7 @@ public extension XCUIElement {
         }
     }
 
+    /// Returns the center coordinate of the element.
     var center: XCUICoordinate {
         let frame = self.frame.size
         let coordinate = self.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
@@ -24,17 +36,17 @@ public extension XCUIElement {
 
 public extension XCUIElement {
     enum ScrollDirection {
-        case up
-        case down
-        case left
-        case right
+        case up(CGFloat)
+        case down(CGFloat)
+        case left(CGFloat)
+        case right(CGFloat)
 
         var vector: CGVector {
             switch self {
-            case .down: return CGVector(dx: 0.0, dy: -262.0)
-            case .up: return CGVector(dx: 0.0, dy: 262.0)
-            case .left: return CGVector(dx: 262.0, dy: 0.0)
-            case .right: return CGVector(dx: -262.0, dy: 0.0)
+            case .down(let offset): return CGVector(dx: 0.0, dy: -offset)
+            case .up(let offset): return CGVector(dx: 0.0, dy: offset)
+            case .left(let offset): return CGVector(dx: offset, dy: 0.0)
+            case .right(let offset): return CGVector(dx: -offset, dy: 0.0)
             }
         }
     }

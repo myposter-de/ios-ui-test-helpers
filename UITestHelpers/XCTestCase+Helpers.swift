@@ -1,22 +1,20 @@
 //
-//  Copyright © 2017 myposter GmbH. All rights reserved.
+//  Copyright © 2018 myposter GmbH. All rights reserved.
 //
 
 import XCTest
 
 public extension XCTestCase {
+    /**
+     Waits for an `XCUIElement` to be existent. It often is necessary to wait for an element in order to be able to (reliably) interact with it.
+
+     - parameter element: the element to wait for
+     - parameter timeInterval: how long to wait for the element to become existent/hittable
+     - parameter hitTest: whether the element requires to be hittable
+     */
     func wait(for element: XCUIElement, for timeInterval: TimeInterval = 15, hitTest: Bool = false) {
         let predicate = hitTest ? NSPredicate(format: "exists == true && isHittable == true") : NSPredicate(format: "exists == true")
-        expectation(for: predicate, evaluatedWith: element, handler: nil)
-        waitForExpectations(timeout: timeInterval, handler: nil)
-    }
-
-    // If keyboard is not showing up, disable HW-Keyboard => `defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool NO`
-    func showKeyboard(for app: XCUIApplication) {
-        wait(for: app.keyboards.element)
-    }
-
-    func hideKeyboard(for app: XCUIApplication) {
-        app.typeText("\n")
+        self.expectation(for: predicate, evaluatedWith: element, handler: nil)
+        self.waitForExpectations(timeout: timeInterval, handler: nil)
     }
 }
