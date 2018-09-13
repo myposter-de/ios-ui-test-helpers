@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D37A25EA14D2819078BC84C /* Pods_UITestHelpers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5949CF4690CF3FE593A062A5 /* Pods_UITestHelpers.framework */; };
 		275B2FFF2147EBCC0012CE75 /* UITestHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 275B2FFD2147EBCC0012CE75 /* UITestHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		275B30082147EDED0012CE75 /* XCUIApplication+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B30052147EDED0012CE75 /* XCUIApplication+Helpers.swift */; };
 		275B30092147EDED0012CE75 /* XCTestCase+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B30062147EDED0012CE75 /* XCTestCase+Helpers.swift */; };
@@ -15,15 +14,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14CF5B1BC60C4FD7F82ABEF6 /* Pods-UITestHelpers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITestHelpers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UITestHelpers/Pods-UITestHelpers.debug.xcconfig"; sourceTree = "<group>"; };
 		275B2FFA2147EBCC0012CE75 /* UITestHelpers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UITestHelpers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		275B2FFD2147EBCC0012CE75 /* UITestHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UITestHelpers.h; sourceTree = "<group>"; };
 		275B2FFE2147EBCC0012CE75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		275B30052147EDED0012CE75 /* XCUIApplication+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Helpers.swift"; sourceTree = "<group>"; };
 		275B30062147EDED0012CE75 /* XCTestCase+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Helpers.swift"; sourceTree = "<group>"; };
 		275B30072147EDED0012CE75 /* XCUIElement+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Helpers.swift"; sourceTree = "<group>"; };
-		5949CF4690CF3FE593A062A5 /* Pods_UITestHelpers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITestHelpers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		69BD4B339607EFA058FF4AFA /* Pods-UITestHelpers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UITestHelpers.release.xcconfig"; path = "Pods/Target Support Files/Pods-UITestHelpers/Pods-UITestHelpers.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,7 +27,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D37A25EA14D2819078BC84C /* Pods_UITestHelpers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,8 +38,6 @@
 			children = (
 				275B2FFC2147EBCC0012CE75 /* UITestHelpers */,
 				275B2FFB2147EBCC0012CE75 /* Products */,
-				C52A610713818861D32DDFAE /* Pods */,
-				DB80288BD197308EA7CE6E3B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,23 +61,6 @@
 			path = UITestHelpers;
 			sourceTree = "<group>";
 		};
-		C52A610713818861D32DDFAE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				14CF5B1BC60C4FD7F82ABEF6 /* Pods-UITestHelpers.debug.xcconfig */,
-				69BD4B339607EFA058FF4AFA /* Pods-UITestHelpers.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		DB80288BD197308EA7CE6E3B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				5949CF4690CF3FE593A062A5 /* Pods_UITestHelpers.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -103,7 +79,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 275B30022147EBCC0012CE75 /* Build configuration list for PBXNativeTarget "UITestHelpers" */;
 			buildPhases = (
-				298C4C8AFEAE284B25F3B29F /* [CP] Check Pods Manifest.lock */,
 				275B2FF52147EBCC0012CE75 /* Sources */,
 				275B2FF62147EBCC0012CE75 /* Frameworks */,
 				275B2FF72147EBCC0012CE75 /* Headers */,
@@ -159,27 +134,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		298C4C8AFEAE284B25F3B29F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-UITestHelpers-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		275B2FF52147EBCC0012CE75 /* Sources */ = {
@@ -317,7 +271,6 @@
 		};
 		275B30032147EBCC0012CE75 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14CF5B1BC60C4FD7F82ABEF6 /* Pods-UITestHelpers.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -345,7 +298,6 @@
 		};
 		275B30042147EBCC0012CE75 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69BD4B339607EFA058FF4AFA /* Pods-UITestHelpers.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
