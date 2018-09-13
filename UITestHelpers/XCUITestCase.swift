@@ -60,30 +60,18 @@ open class XCUITestCase: XCTestCase {
 
     // MARK: - Helpers
 
-    open func tapDisclosureIndicatorOnCell(at index: Int) {
-        let cell = self.app.cells.element(boundBy: index)
-        let disclosureIndicator = cell.descendants(matching: .button).element(boundBy: 2)
-        self.tapCenterOfElement(disclosureIndicator)
-    }
-
+    /// Convenience method to tap a button
+    /// - parameter identifier: The AccessibilityIdentifier of the button
     open func tapButton(_ identifier: String) {
         let button = self.app.buttons[identifier]
-        self.tapElement(button)
+        button.waitAndTap()
     }
 
+    /// Convenience method to tap on a `UIImageView`
+    /// - parameter identifier: The AccessibilityIdentifier of the image
     open func tapImage(_ identifier: String) {
         let image = self.app.images[identifier]
-        self.tapElement(image)
-    }
-
-    open func tapElement(_ element: XCUIElement) {
-        self.wait(for: element)
-        element.tap()
-    }
-
-    open func tapCenterOfElement(_ element: XCUIElement) {
-        self.wait(for: element)
-        element.center.tap()
+        image.waitAndTap()
     }
 
     open func tapPickerSubmitButton() {

@@ -6,7 +6,7 @@ import XCTest
 
 public extension XCUIElement {
     /**
-     Scrolls to the provided element. Must be used on a `UIScrollView` ;-)
+     Tries to iterativley scroll to the provided element. Must be used on a `UIScrollView` ;-)
 
          // Example:
          let collectionView = self.app.collectionViews.element(boundBy: 0)
@@ -31,6 +31,22 @@ public extension XCUIElement {
         let coordinate = self.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let centerOfElement = coordinate.withOffset(CGVector(dx: frame.width / 2, dy: frame.height / 2))
         return centerOfElement
+    }
+
+    /// Waits for the element to be existent
+    /// - parameter timeout: Maximum time to wait for the element
+    func wait(for timeout: TimeInterval = 15) {
+        guard self.waitForExistence(timeout: timeout) else {
+            XCTFail()
+            return
+        }
+    }
+
+    /// Waits for the element to be existent and then taps it
+    /// - parameter timeout: Maximum time to wait for the element
+    func waitAndTap(for timeout: TimeInterval = 15) {
+        self.wait(for: timeout)
+        self.tap()
     }
 }
 

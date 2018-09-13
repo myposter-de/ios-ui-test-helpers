@@ -15,7 +15,7 @@ public extension XCUIApplication {
      - parameter testCase: The current `XCTestCase` instance aka `self`, in order to be able to wait for the keyboard to actually show up.
     */
     func showKeyboard(for testCase: XCTestCase) {
-        testCase.wait(for: self.keyboards.element)
+        self.keyboards.element.wait()
     }
 
     /// Dismisses the keyboard

@@ -1,6 +1,3 @@
-WIP
-======
-
 # UITestHelpers
 ![pod](https://img.shields.io/cocoapods/v/UITestHelpers.svg) ![platforms](https://img.shields.io/badge/platforms-iOS-00AFF0.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-00AFF0.svg)](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/LICENSE)
 
@@ -29,34 +26,64 @@ Of course you can just drag the source files into your project, but using CocoaP
 ## Usage / Examples
 
 ```swift
-// handle (dismiss) permission alerts
-self.addAlertsHandler(for: ["Allow", "OK"])
+class MyUITests: XCUITestCase {
+    override func setUp() {
+        super.setUp()
+        self.continueAfterFailure = false
+        self.addAlertsHandler(for: ["Allow", "OK"])
+        self.app.launchEnvironment = ["AutoCorrection": "Disabled"]
+        self.app.launch()
+    }
 
-// tap a button
-self.tapButton("buttonAccessibilityIdentifier")
+    func testSomething() {
+        // tap an element (it's important to wait for an element to exist, before tapping it)
+        element.waitAndTap()
 
-// tap a cell in a collectionView (scroll to the right, if needed)
-self.tapCollectionViewCell("collectionViewCellAccessibilityIdentifier", in: "collectionViewAccessibilityIdentifier", scrollDirection: .right(100))
+        // tap a button
+        self.tapButton("buttonAccessibilityIdentifier")
 
-// tap the "Continue" button on the next alert dialog
-self.tapAlertButton(name: "Continue")
+        // tap a cell in a collectionView (scroll to the right, if needed)
+        self.tapCollectionViewCell("collectionViewCellAccessibilityIdentifier", in: "collectionViewAccessibilityIdentifier", scrollDirection: .right(100))
 
-// tap on a static textField
-self.tapElement(app.staticTexts["Proceed with Sandbox Purchase"])
+        // handle (dismiss) permission alerts
+        self.addAlertsHandler(for: ["Allow", "OK"])
 
-// show keyboard
-self.app.showKeyboard(for: self)
+        // tap the "Continue" button on the next alert dialog
+        self.tapAlertButton(name: "Continue")
 
-// really type on the keyboard (sometimes this is needed in contrast to `XCUIElement.typeText`)
-self.app.typeOnKeyboard(text: "1337")
+        // show keyboard
+        self.app.showKeyboard(for: self)
 
-// hide keyboard
-self.app.hideKeyboard()
+        // really type on the keyboard (sometimes this is needed in contrast to `XCUIElement.typeText`)
+        self.app.typeOnKeyboard(text: "1337")
+
+        // hide keyboard
+        self.app.hideKeyboard()
+    }
+}
 ```
 
-## Reliability / Improvements / Trouble shooting
+## Reliability
 
-### Ensure a clean app state for each test
+### Using `accessibilityIdentifier`s
+
+To get reliable results from your tests, it's recommended, to use `accessibilityIdentifier`s, wherever possible.
+For static stuff you can just set them right in Interface Builder:
+
+![](Docs/IBAccessibilityIdentifier.png)
+
+Or if the element does not have an `Accessibility` section, using `User Defined Runtime Attributes`:
+
+![](Docs/IBAccessibilityIdentifierAlternative.png)
+
+For dynamic stuff however, you'll have to set it in code. Some may consider this a kind of clutter to have test-only stuff in the code base, but as it's really just a one-liner in e.g. a `UITableViewCell`. And I would really take "this clutter" anytime over less reliable UI tests (e.g. when using indices instead). 
+E.g.:
+```swift
+let dynamic = "somethingSpecificToThisCell"
+self.accessibilityIdentifier = "your\(dynamic)IdentifierHere"
+```
+
+### How to ensure a clean app state for each test
 
 As Apple doesn't provide a way to really clean the app state for each test, we'll have to do it manually by providing our own "main function".
 For that we'll use a launch argument like `--Reset` that we'll pass to our `XCUIApplication` in our tests setup (see `XCUITestCase` base class).
@@ -81,6 +108,8 @@ _ = autoreleasepool {
 
 See also [Resetting iOS Simulator for UI tests][1].
 
+## Trouble shooting
+
 ### The software keyboard is not showing up
 
 Make sure the hardware keyboard is disconnected.
@@ -89,6 +118,22 @@ Make sure the hardware keyboard is disconnected.
 ```shell
 defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool NO
 ```
+
+![](Docs/BuildPhase.png)
+
+### Debugging
+
+#### Xcode's `Debug View Hierarchy` feature
+
+Here you can see all the accessibility information for an element.
+
+![](Docs/XcodeDebugViewHierarchy.png)
+
+#### Accessibility Inspector
+
+Use this nice app (inclued in Xcode's Developer Tools) to inspect the app in a simulator, and get accessibility information as well as the hierarchy of the element.
+
+![](Docs/AccessibilityInspector.png)
 
 ## Credits
 
