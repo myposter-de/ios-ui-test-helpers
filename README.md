@@ -1,5 +1,7 @@
 # UITestHelpers
-![pod](https://img.shields.io/cocoapods/v/UITestHelpers.svg) ![platforms](https://img.shields.io/badge/platforms-iOS-00AFF0.svg) [![License](https://img.shields.io/badge/License-Apache%202.0-00AFF0.svg)](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/LICENSE)
+[![CocoaPods](https://img.shields.io/cocoapods/v/UITestHelpers.svg?colorB=00aff0)](https://cocoapods.org/pods/UITestHelpers)
+[![Platforms](https://img.shields.io/badge/platforms-iOS-00aff0.svg)](https://www.apple.com/lae/ios)
+[![License](https://img.shields.io/badge/License-Apache%202.0-00AFF0.svg)](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/LICENSE)
 
 A collection of useful helper functions to make writing UI tests at least a little bit less painful.
 
@@ -70,11 +72,11 @@ class MyUITests: XCUITestCase {
 To get reliable results from your tests, it's recommended, to use `accessibilityIdentifier`s, wherever possible.
 For static stuff you can just set them right in Interface Builder:
 
-![](Docs/IBAccessibilityIdentifier.png)
+![](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/Docs/IBAccessibilityIdentifier.png)
 
 Or if the element does not have an `Accessibility` section, using `User Defined Runtime Attributes`:
 
-![](Docs/IBAccessibilityIdentifierAlternative.png)
+![](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/Docs/IBAccessibilityIdentifierAlternative.png)
 
 For dynamic stuff however, you'll have to set it in code. Some may consider this a kind of clutter to have test-only stuff in the code base, but as it's really just a one-liner in e.g. a `UITableViewCell`. And I would really take "this clutter" anytime over less reliable UI tests (e.g. when using indices instead). 
 E.g.:
@@ -119,7 +121,7 @@ Make sure the hardware keyboard is disconnected.
 defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool NO
 ```
 
-![](Docs/BuildPhase.png)
+![](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/Docs/BuildPhase.png)
 
 ### Debugging
 
@@ -127,13 +129,13 @@ defaults write com.apple.iphonesimulator ConnectHardwareKeyboard -bool NO
 
 Here you can see all the accessibility information for an element.
 
-![](Docs/XcodeDebugViewHierarchy.png)
+![](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/Docs/XcodeDebugViewHierarchy.png)
 
 #### Accessibility Inspector
 
 Use this nice app (inclued in Xcode's Developer Tools) to inspect the app in a simulator, and get accessibility information as well as the hierarchy of the element.
 
-![](Docs/AccessibilityInspector.png)
+![](https://github.com/myposter-de/ios-ui-test-helpers/blob/master/Docs/AccessibilityInspector.png)
 
 ## Credits
 
