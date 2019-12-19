@@ -15,7 +15,7 @@ public extension XCUIElement {
          collectionView.scrollToElement(element: cell)
 
      - parameter element: The element to look for.
-     - parameter scrollDirection: Which direction and how far to scroll in each iteration.
+     - parameter scrollDirection: Which direction to scroll and how large each "scroll step" should be.
      */
     func scrollToElement(element: XCUIElement, scrollDirection: ScrollDirection = .down(250.0)) {
         while !(element.exists && element.isHittable) {
@@ -37,7 +37,7 @@ public extension XCUIElement {
     /// - parameter timeout: Maximum time to wait for the element
     func wait(for timeout: TimeInterval = 15) {
         guard self.waitForExistence(timeout: timeout) else {
-            XCTFail()
+            XCTFail("Timeout: Element `\(self)` did come into existence after waiting for \(timeout) seconds.")
             return
         }
     }
