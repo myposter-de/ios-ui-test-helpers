@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name           = "UITestHelpers"
-  s.version        = "0.2.0"
+  s.version        = "0.3.0"
   s.summary        = "UITestHelpers make UITests almost fun to write^^"
   s.description    = <<-DESC
                       A collection of useful helper functions to make writing UI tests at least a little bit less painful.

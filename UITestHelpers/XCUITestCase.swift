@@ -5,10 +5,10 @@
 import XCTest
 
 open class XCUITestCase: XCTestCase {
-    /// `XCUIApplication` instance to be used in the tests, ensures `--Reset` flag
+    /// `XCUIApplication` instance to be used in the tests, ensures `--UITests` flag
     lazy open var app: XCUIApplication = {
         let app = XCUIApplication()
-        app.launchArguments += ["--Reset"]
+        app.launchArguments += ["--UITests"]
         return app
     }()
 
@@ -60,104 +60,86 @@ open class XCUITestCase: XCTestCase {
 
     // MARK: - Helpers
 
-    /// Convenience method to tap any kind of element
-    ///
-    /// Will go through any type available, and pick the first one matching the provided `identifier`.
-    /// For performance reasons, the list is more or less sorted form more popular types to less ones.
-    /// - parameter identifier: The AccessibilityIdentifier of the element
+    /// Convenience method to tap any element
+    /// - parameter identifier: The AccessibilityIdentifier of the button
     open func tapAny(_ identifier: String) {
-        let queries = [
-            self.app.buttons,
-            self.app.cells,
-            self.app.images,
-            self.app.otherElements,
-            self.app.navigationBars,
-            self.app.tabBars,
-            self.app.collectionViews,
-            self.app.tables,
-            self.app.tableRows,
-            self.app.tableColumns,
-            self.app.sliders,
-            self.app.pickers,
-            self.app.pickerWheels,
-            self.app.toolbarButtons,
-            self.app.toolbars,
-            self.app.touchBars,
-            self.app.groups,
-            self.app.windows,
-            self.app.sheets,
-            self.app.drawers,
-            self.app.alerts,
-            self.app.dialogs,
-            self.app.radioButtons,
-            self.app.radioGroups,
-            self.app.checkBoxes,
-            self.app.disclosureTriangles,
-            self.app.popUpButtons,
-            self.app.comboBoxes,
-            self.app.menuButtons,
-            self.app.popovers,
-            self.app.keyboards,
-            self.app.keys,
-            self.app.tabGroups,
-            self.app.statusBars,
-            self.app.outlines,
-            self.app.outlineRows,
-            self.app.disclosedChildRows,
-            self.app.browsers,
-            self.app.pageIndicators,
-            self.app.progressIndicators,
-            self.app.activityIndicators,
-            self.app.segmentedControls,
-            self.app.switches,
-            self.app.toggles,
-            self.app.links,
-            self.app.icons,
-            self.app.searchFields,
-            self.app.scrollViews,
-            self.app.scrollBars,
-            self.app.staticTexts,
-            self.app.textFields,
-            self.app.secureTextFields,
-            self.app.datePickers,
-            self.app.textViews,
-            self.app.menus,
-            self.app.menuItems,
-            self.app.menuBars,
-            self.app.menuBarItems,
-            self.app.maps,
-            self.app.webViews,
-            self.app.steppers,
-            self.app.incrementArrows,
-            self.app.decrementArrows,
-            self.app.tabs,
-            self.app.timelines,
-            self.app.ratingIndicators,
-            self.app.valueIndicators,
-            self.app.splitGroups,
-            self.app.splitters,
-            self.app.relevanceIndicators,
-            self.app.colorWells,
-            self.app.helpTags,
-            self.app.mattes,
-            self.app.dockItems,
-            self.app.rulers,
-            self.app.rulerMarkers,
-            self.app.grids,
-            self.app.levelIndicators,
-            self.app.layoutAreas,
-            self.app.layoutItems,
-            self.app.handles,
-            self.app.statusItems
-        ]
+        let element = self.app.descendants(matching: .any)[identifier]
+        element.waitAndTap()
+    }
 
-        for query in queries {
-            let element = query[identifier]
-            if element.exists {
-                element.tap()
-                break
-            }
+    /// Convenience method to query any type of element
+    ///
+    /// Returns the first element matching the provided `identifier`.
+    /// - parameter identifier: The AccessibilityIdentifier of the element
+    open func element(with identifier: String) -> XCUIElement {
+        let element = self.app.descendants(matching: .any)[identifier]
+        guard element.exists else {
+            fatalError("Element with identifier \(identifier) not found!")
         }
+
+        return element
+    }
+
+    /// Convenience method to type text into a text field
+    ///
+    /// - parameter text: The string to be typed into the text field
+    /// - parameter identifier: The AccessibilityIdentifier of the element
+    open func typeText(_ text: String, into idenfitifer: String) {
+        let textField = self.app.textFields[idenfitifer]
+        self.typeText(text, into: textField)
+    }
+
+    /// Convenience method to type text into a secure text field
+    ///
+    /// - parameter text: The string to be typed into the secure text field
+    /// - parameter identifier: The AccessibilityIdentifier of the element
+    open func typeSecureText(_ text: String, into idenfitifer: String) {
+        let secureTextField = self.app.secureTextFields[idenfitifer]
+        self.typeText(text, into: secureTextField)
+    }
+
+    private func typeText(_ text: String, into element: XCUIElement) {
+        element.waitAndTap()
+        element.clearText()
+        element.typeText(text)
+    }
+
+    /// Convenience method to retrieve text from a label
+    ///
+    /// Returns the text of the label
+    /// - parameter identifier: The AccessibilityIdentifier of the element
+    open func textFromLabel(_ identifier: String) -> String {
+        let label = self.app.staticTexts[identifier]
+        label.wait()
+        return label.label
+    }
+
+    /// Convenience method to retrieve text from a text field
+    ///
+    /// Returns the text of the text field
+    /// - parameter identifier: The AccessibilityIdentifier of the element
+    open func textFromTextField(_ identifier: String) -> String {
+        let textField = self.app.textFields[identifier]
+        textField.wait()
+
+        guard let text = textField.value as? String else {
+            fatalError("TextField's value with identifier `\(identifier)` does not contain a String!")
+        }
+        return text
+    }
+
+    /// Convenience method to retrieve text from a secure text field
+    ///
+    /// Returns the text of the secure text field
+    /// - parameter identifier: The AccessibilityIdentifier of the element
+    open func textFromSecureTextField(_ identifier: String) -> String {
+        let secureTextField = self.app.secureTextFields[identifier]
+        secureTextField.wait()
+
+        guard let text = secureTextField.value as? String else {
+            fatalError("SecureTextField's value with identifier `\(identifier)` does not contain a String!")
+        }
+        return text
     }
 
     /// Convenience method to tap the navigation back button
@@ -194,11 +176,35 @@ open class XCUITestCase: XCTestCase {
         other.waitAndTap()
     }
 
+    /// Convenience method to select picker values
+    /// - parameter values: The values to be selected for each wheel, from left to right
+    open func pickerSelect(values: String...) {
+        for (index, value) in values.enumerated() {
+            self.app.pickerWheels.element(boundBy: index).adjust(toPickerWheelValue: value)
+        }
+    }
+
+    /// Convenience method to select a date in a date picker
+    /// - parameter day: The day to be selected in the date picker
+    /// - parameter month: The month to be selected in the date picker
+    /// - parameter year: The year to be selected in the date picker
+    /// Credits: https://stackoverflow.com/a/47956278/2019384
+    open func datePickerSelect(day: String, month: String, year: String) {
+        let dateComponent = Calendar.current.dateComponents([.day, .month, .year], from: Date())
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM"
+        let monthText = formatter.string(from: Date())
+
+        self.app.pickerWheels[String(dateComponent.year!)].adjust(toPickerWheelValue: year)
+        self.app.pickerWheels[monthText].adjust(toPickerWheelValue: month)
+        self.app.pickerWheels[String(dateComponent.day!)].adjust(toPickerWheelValue: day)
+    }
+
     /// Convenience method to tap on a `UIBarButtonItem`
     /// - parameter identifier: The AccessibilityIdentifier of the button
-    open func tapPickerSubmitButton() {
-        let pickerSubmitButton = self.app.toolbars.buttons.element(boundBy: 0)
-        pickerSubmitButton.tap()
+    open func tapPickerButton(index: Int = 0) {
+        let pickerSubmitButton = self.app.toolbars.buttons.element(boundBy: index)
+        pickerSubmitButton.waitAndTap()
     }
 
     /// Scroll to a `UITableViewCell`

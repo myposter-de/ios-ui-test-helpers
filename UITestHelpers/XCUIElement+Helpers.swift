@@ -48,6 +48,17 @@ public extension XCUIElement {
         self.wait(for: timeout)
         self.tap()
     }
+
+    /// Clears the text on any element that can `typeText` like text fields.
+    /// Credits: https://exceptionshub.com/ui-test-deleting-text-in-text-field.html
+    func clearText() {
+        guard let stringValue = self.value as? String else {
+            XCTFail("Tried to clear and enter text into a non string value")
+            return
+        }
+        let deleteString = stringValue.map { _ in XCUIKeyboardKey.delete.rawValue }.joined(separator: "")
+        self.typeText(deleteString)
+    }
 }
 
 public extension XCUIElement {
