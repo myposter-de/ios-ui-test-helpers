@@ -50,9 +50,9 @@ open class XCUITestCase: XCTestCase {
         // Note the handler above only gets called, once there was a user interaction in the app
         // -> so we need to tap around, until the alert is present, to trigger the handler 0_o
         while retryCount > 0 {
-            sleep(1)
-            self.app.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 60)).tap()
+            self.app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.0001)).tap()
             retryCount -= 1
+            sleep(1)
         }
 
         self.removeUIInterruptionMonitor(monitor)
@@ -114,6 +114,16 @@ open class XCUITestCase: XCTestCase {
         return label.label
     }
 
+    /// Convenience method to retrieve text from a button
+    ///
+    /// Returns the text of the label
+    /// - parameter identifier: The AccessibilityIdentifier of the element
+    open func textFromButton(_ identifier: String) -> String {
+        let label = self.app.buttons[identifier]
+        label.wait()
+        return label.label
+    }
+
     /// Convenience method to retrieve text from a text field
     ///
     /// Returns the text of the text field
@@ -151,28 +161,28 @@ open class XCUITestCase: XCTestCase {
     /// Convenience method to tap a button
     /// - parameter identifier: The AccessibilityIdentifier of the button
     open func tapButton(_ identifier: String) {
-        let button = self.app.buttons[identifier]
+        let button = self.app.buttons[identifier].firstMatch
         button.waitAndTap()
     }
 
     /// Convenience method to tap on a `UIImageView`
     /// - parameter identifier: The AccessibilityIdentifier of the image
     open func tapImage(_ identifier: String) {
-        let image = self.app.images[identifier]
+        let image = self.app.images[identifier].firstMatch
         image.waitAndTap()
     }
 
     /// Convenience method to tap on a cell
     /// - parameter identifier: The AccessibilityIdentifier of the cell
     open func tapCell(_ identifier: String) {
-        let other = self.app.cells[identifier]
+        let other = self.app.cells[identifier].firstMatch
         other.waitAndTap()
     }
 
     /// Convenience method to tap on any (other) element
     /// - parameter identifier: The AccessibilityIdentifier of the element
     open func tapOther(_ identifier: String) {
-        let other = self.app.otherElements[identifier]
+        let other = self.app.otherElements[identifier].firstMatch
         other.waitAndTap()
     }
 
