@@ -114,6 +114,19 @@ See also [Resetting iOS Simulator for UI tests][1].
 
 ### The software keyboard is not showing up
 
+#### Xcode 10+
+
+```swift
+func disableHardwareKeyboard() {
+    let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
+    UITextInputMode.activeInputModes
+        .filter({ $0.responds(to: setHardwareLayout) })
+        .forEach { $0.perform(setHardwareLayout, with: nil) }
+}
+```
+
+#### Xcode 9-
+
 Make sure the hardware keyboard is disconnected.
 - Pressing `cmd` + `shift` + `k` in the simulator will toggle the hardware keyboard
 - Even better: Disable it in a `Build Phase` script, **in your UI tests target**, like follows, to ensure this for each test run:
@@ -141,7 +154,9 @@ Use this nice app (inclued in Xcode's Developer Tools) to inspect the app in a s
 
 - [Resetting iOS Simulator for UI tests][1]
 - [Scroll until element is visible iOS UI Automation with xcode7][2]
+- [Is it possible to “toggle software keyboard” via the code in UI test?][3]
 
 
 [1]: https://m.pardel.net/resetting-ios-simulator-for-ui-tests-cd7fff57788e
 [2]: https://stackoverflow.com/questions/32646539/scroll-until-element-is-visible-ios-ui-automation-with-xcode7
+[3]: https://stackoverflow.com/a/57618331/2019384

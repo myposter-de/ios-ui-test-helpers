@@ -18,7 +18,7 @@ public extension XCUIElement {
      - parameter scrollDirection: Which direction to scroll and how large each "scroll step" should be.
      */
     func scrollToElement(element: XCUIElement, scrollDirection: ScrollDirection = .down(250.0)) {
-        while !(element.exists && element.isHittable) {
+        while !(element.waitForExistence(timeout: 1) && element.isHittable) {
             let startCoord = self.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
             let endCoord = startCoord.withOffset(scrollDirection.vector)
             startCoord.press(forDuration: 0.01, thenDragTo: endCoord)

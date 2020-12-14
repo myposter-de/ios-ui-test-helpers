@@ -224,6 +224,7 @@ open class XCUITestCase: XCTestCase {
     open func scrollToTableViewCell(_ cellIdentifier: String, in tableViewIdentifier: String, scrollDirection: XCUIElement.ScrollDirection = .down(250)) {
         let tableView = self.app.tables[tableViewIdentifier]
         let cell = tableView.cells.matching(identifier: cellIdentifier).element(boundBy: 0)
+        tableView.wait(for: 1)
         tableView.scrollToElement(element: cell, scrollDirection: scrollDirection)
     }
 
@@ -234,6 +235,7 @@ open class XCUITestCase: XCTestCase {
     open func tapTableViewCell(_ cellIdentifier: String, in tableViewIdentifier: String, scrollDirection: XCUIElement.ScrollDirection = .down(250)) {
         let tableView = self.app.tables[tableViewIdentifier]
         let cell = tableView.cells.matching(identifier: cellIdentifier).element(boundBy: 0)
+        tableView.wait(for: 1)
         tableView.scrollToElement(element: cell, scrollDirection: scrollDirection)
         cell.tap()
     }
@@ -245,6 +247,7 @@ open class XCUITestCase: XCTestCase {
     open func scrollToCollectionViewCell(_ cellIdentifier: String, in collectionViewIdentifier: String, scrollDirection: XCUIElement.ScrollDirection = .down(250)) {
         let collectionView = self.app.collectionViews[collectionViewIdentifier]
         let cell = collectionView.cells.matching(identifier: cellIdentifier).element(boundBy: 0)
+        collectionView.wait(for: 1)
         collectionView.scrollToElement(element: cell, scrollDirection: scrollDirection)
     }
 
@@ -255,6 +258,7 @@ open class XCUITestCase: XCTestCase {
     open func tapCollectionViewCell(_ cellIdentifier: String, in collectionViewIdentifier: String, scrollDirection: XCUIElement.ScrollDirection = .down(250)) {
         let collectionView = self.app.collectionViews[collectionViewIdentifier]
         let cell = collectionView.cells.matching(identifier: cellIdentifier).element(boundBy: 0)
+        collectionView.wait(for: 1)
         collectionView.scrollToElement(element: cell, scrollDirection: scrollDirection)
         cell.tap()
     }
